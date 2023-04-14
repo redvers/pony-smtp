@@ -1,0 +1,8 @@
+{
+  "locks": [
+    {
+      "locator": "github.com/redvers/pony-email.git",
+      "revision": "main"
+    }
+  ]
+}

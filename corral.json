@@ -1,0 +1,19 @@
+{
+  "packages": [
+    "smtp"
+  ],
+  "deps": [
+    {
+      "locator": "github.com/redvers/pony-email.git",
+      "version": ""
+    }
+  ],
+  "info": {
+    "description": "Library to send formatted EMails via smtp",
+    "homepage": "https://github.com/redvers/pony-smtp/",
+    "license": "BSD-2-Clause",
+    "documentation_url": "https://redvers.github.io/pony-smtp",
+    "version": "0.0.0",
+    "name": "smtp"
+  }
+}

@@ -27,29 +27,28 @@ class SMTPClientNotify is TCPConnectionNotify
   let config: SMTPConfiguration val
   let reader: Reader = Reader
   let outgoingreader: Reader = Reader
-  var email: EMail iso
+  var email: EMail val
   var rcpttos: Array[String] = []
   var currentto: String val = ""
   var sessionlog: Reader iso = recover iso Reader end
 
-  new create(config': SMTPConfiguration val, email': EMail iso) =>
+  new create(config': SMTPConfiguration val, email': EMail val) =>
     config = config'
     email = consume email'
 
-    for to in email.to.keys() do
+    for to in email.to'.keys() do
       rcpttos.push(to)
     end
-    for cc in email.cc.keys() do
+    for cc in email.cc'.keys() do
       rcpttos.push(cc)
     end
-    for bcc in email.bcc.keys() do
+    for bcc in email.bcc'.keys() do
       rcpttos.push(bcc)
     end
 
   fun ref connect_failed(conn: TCPConnection ref) =>
-    var temail: EMail iso = email = recover iso EMail end
     var tsessionlog: Reader iso = sessionlog = recover iso Reader end
-    config.callback(consume temail, consume tsessionlog)
+    config.callback(email, consume tsessionlog)
 
   fun ref connected(conn: TCPConnection ref) =>
 
@@ -85,9 +84,8 @@ class SMTPClientNotify is TCPConnectionNotify
     end
     true
   fun ref closed(conn: TCPConnection ref) =>
-    var temail: EMail iso = email = recover iso EMail end
     var tsessionlog: Reader iso = sessionlog = recover iso Reader end
-    config.callback(consume temail, consume tsessionlog)
+    config.callback(email, consume tsessionlog)
 
   fun ref recv_pending_ok(conn: TCPConnection ref) =>
     try
@@ -149,7 +147,7 @@ class SMTPClientNotify is TCPConnectionNotify
         debug("← " + line)
         if (line.at(" ", 3)) then
           debug("→ SMTPClientStateAcceptedEHLO ←")
-          conn.write("MAIL FROM: " + email.from + "\r\n")
+          conn.write("MAIL FROM: " + email.from' + "\r\n")
           client_state = SMTPClientStateAcceptedEHLO
           break
         end

@@ -1,4 +1,4 @@
-config ?= release
+config ?= debug
 
 PACKAGE := smtp
 GET_DEPENDENCIES_WITH := corral fetch

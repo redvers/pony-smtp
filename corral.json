@@ -13,7 +13,7 @@
     "homepage": "https://github.com/redvers/pony-smtp/",
     "license": "BSD-2-Clause",
     "documentation_url": "https://redvers.github.io/pony-smtp",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "name": "smtp"
   }
 }

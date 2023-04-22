@@ -25,7 +25,15 @@ class \nodoc\ iso _EMailGeneration is UnitTest
       .>html_body("<h1>Hello World</h1>")
     end
 
-    let smtpconfig: SMTPConfiguration = SMTPConfiguration("evil.red", "evil.red", "25", {(e: EMail val, r: Reader iso): None => Debug.out("Callback")})
+    let smtpconfig: SMTPConfiguration = SMTPConfiguration("evil.red", "evil.red", "25",
+        {(s: Bool, e: EMail val, r: Reader iso): None =>
+          try
+            while true do
+              Debug.out("READER: " + r.line()?)
+            end
+          end
+          Debug.out("Final Status: " + s.string())
+        })
 
     let smtp: SMTPClient = SMTPClient(TCPConnectAuth(h.env.root), smtpconfig, email)
 

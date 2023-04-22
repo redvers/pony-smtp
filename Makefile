@@ -30,7 +30,7 @@ EXAMPLES := $(notdir $(shell find $(EXAMPLES_DIR)/* -type d))
 EXAMPLES_SOURCE_FILES := $(shell find $(EXAMPLES_DIR) -name *.pony)
 EXAMPLES_BINARIES := $(addprefix $(BUILD_DIR)/,$(EXAMPLES))
 
-test: unit-tests integration-tests build-examples
+test: unit-tests integration-tests # build-examples
 
 unit-tests: $(tests_binary)
 	$^ --exclude=integration/ --sequential

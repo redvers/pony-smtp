@@ -35,7 +35,7 @@ class \nodoc\ iso _EMailGeneration is UnitTest
           Debug.out("Final Status: " + s.string())
         })
 
-    let smtp: SMTPClient = SMTPClient(TCPConnectAuth(h.env.root), smtpconfig, email)
+//    let smtp: SMTPClient = SMTPClient(TCPConnectAuth(h.env.root), smtpconfig, email)
 
     h.env.out.print(email.render())
 

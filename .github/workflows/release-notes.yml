@@ -18,7 +18,7 @@ jobs:
       - name: Update
         uses: docker://ponylang/release-notes-bot-action:0.3.6
         with:
-          git_user_name: "Ponylang Main Bot"
-          git_user_email: "ponylang.main@gmail.com"
+          git_user_name: "redvers"
+          git_user_email: "red@infect.me"
         env:
           API_CREDENTIALS: ${{ secrets.GITHUB_TOKEN }}

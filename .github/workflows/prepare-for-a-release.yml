@@ -25,29 +25,29 @@ jobs:
         with:
           entrypoint: update-changelog-for-release
         env:
-          GIT_USER_NAME: "Ponylang Main Bot"
-          GIT_USER_EMAIL: "ponylang.main@gmail.com"
+          GIT_USER_NAME: "redvers"
+          GIT_USER_EMAIL: "red@infect.me"
       - name: Update VERSION
         uses: ponylang/release-bot-action@0.6.1
         with:
           entrypoint: update-version-in-VERSION
         env:
-          GIT_USER_NAME: "Ponylang Main Bot"
-          GIT_USER_EMAIL: "ponylang.main@gmail.com"
+          GIT_USER_NAME: "redvers"
+          GIT_USER_EMAIL: "red@infect.me"
       - name: Update version in README
         uses: ponylang/release-bot-action@0.6.1
         with:
           entrypoint: update-version-in-README
         env:
-          GIT_USER_NAME: "Ponylang Main Bot"
-          GIT_USER_EMAIL: "ponylang.main@gmail.com"
+          GIT_USER_NAME: "redvers"
+          GIT_USER_EMAIL: "red@infect.me"
       - name: Update corral.json
         uses: ponylang/release-bot-action@0.6.1
         with:
           entrypoint: update-version-in-corral-json
         env:
-          GIT_USER_NAME: "Ponylang Main Bot"
-          GIT_USER_EMAIL: "ponylang.main@gmail.com"
+          GIT_USER_NAME: "redvers"
+          GIT_USER_EMAIL: "red@infect.me"
 
   # tag for release
   # this will kick off the next stage of the release process
@@ -68,8 +68,8 @@ jobs:
         with:
           entrypoint: trigger-artefact-creation
         env:
-          GIT_USER_NAME: "Ponylang Main Bot"
-          GIT_USER_EMAIL: "ponylang.main@gmail.com"
+          GIT_USER_NAME: "redvers"
+          GIT_USER_EMAIL: "red@infect.me"
 
   # all cleanup tags that should happen after tagging for release should happen
   # in the post-tagging job. examples of things you might do:
@@ -93,5 +93,5 @@ jobs:
         with:
           entrypoint: add-unreleased-section-to-changelog
         env:
-          GIT_USER_NAME: "Ponylang Main Bot"
-          GIT_USER_EMAIL: "ponylang.main@gmail.com"
+          GIT_USER_NAME: "redvers"
+          GIT_USER_EMAIL: "red@infect.me"

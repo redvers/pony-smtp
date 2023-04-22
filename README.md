@@ -19,4 +19,3 @@ You shouldn't be using this as it is in active development and not ready to be u
 ## API Documentation
 
 [https://redvers.github.io/pony-smtp](https://redvers.github.io/pony-smtp)
-

@@ -39,20 +39,15 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - pre-artefact-creation
-    container:
-      image: ghcr.io/ponylang/library-documentation-action-v2:release
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          ref: "main"
-          token: ${{ secrets.RELEASE_TOKEN }}
       - name: Generate documentation
-        run: /entrypoint.py
-        env:
-          INPUT_SITE_URL: "https://redvers.github.io/pony-smtp/"
-          INPUT_LIBRARY_NAME: "smtp"
-          INPUT_DOCS_BUILD_DIR: "build/smtp-docs"
+        uses: docker://ponylang/library-documentation-action-v2:release
+        with:
+          site_url: "https://redvers.github.io/pony-smtp/"
+          library_name: "smtp"
+          docs_build_dir: "build/smtp-docs"
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact

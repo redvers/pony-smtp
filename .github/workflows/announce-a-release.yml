@@ -52,12 +52,12 @@ jobs:
         with:
           entrypoint: rotate-release-notes
         env:
-          GIT_USER_NAME: "Ponylang Main Bot"
-          GIT_USER_EMAIL: "ponylang.main@gmail.com"
+          GIT_USER_NAME: "redvers"
+          GIT_USER_EMAIL: "red@infect.me"
       - name: Delete announcement trigger tag
         uses: ponylang/release-bot-action@0.6.1
         with:
           entrypoint: delete-announcement-tag
         env:
-          GIT_USER_NAME: "Ponylang Main Bot"
-          GIT_USER_EMAIL: "ponylang.main@gmail.com"
+          GIT_USER_NAME: "redvers"
+          GIT_USER_EMAIL: "red@infect.me"

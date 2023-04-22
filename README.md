@@ -48,7 +48,7 @@ actor Main
 ## Installation
 
 * Install [corral](https://github.com/ponylang/corral)
-* `corral add github.com/redvers/pony-smtp.git --version 0.0.2`
+* `corral add github.com/redvers/pony-smtp.git --version 0.0.3`
 * `corral fetch` to fetch your dependencies
 * `use "smtp"` to include this package
 * `corral run -- ponyc` to compile your application

@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
+- Updated release-notes-bot ([PR #5](https://github.com/redvers/pony-smtp/pull/5))
 
 ### Changed
 

@@ -11,7 +11,7 @@ You shouldn't be using this as it is in active development and not ready to be u
 ## Installation
 
 * Install [corral](https://github.com/ponylang/corral)
-* `corral add github.com/redvers/pony-smtp.git --version 0.0.0`
+* `corral add github.com/redvers/pony-smtp.git --version 0.0.1`
 * `corral fetch` to fetch your dependencies
 * `use "smtp"` to include this package
 * `corral run -- ponyc` to compile your application

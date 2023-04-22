@@ -3,24 +3,23 @@ use "email"
 use "debug"
 use "buffered"
 
+use @exit[None](x: I32)
+use @printf[U32](fmt: Pointer[U8] tag, ...)
+
 class SMTPClientNotify is TCPConnectionNotify
   """
   This class is the center of the SMTP client.  It contains all the logic
-  that is used to manage the connection.  Currently we only allow one
-  email per connection, but that is trivial to extend once we formalize
-  what we want the wider API to look like.
+  that is used to manage the connection.
 
   The current API is intended to provide maximum instrumentation until we
   have fully explored all the odd corners in the implementation.
 
   Fundamentally, this Notifier takes an SMTPConfiguration val (which
-  contains all the relay server configuration) and an EMail iso (which,
-  predictably, is an iso.
+  contains all the relay server configuration) and an EMail val
 
-  As the SMTP transaction is performed, a log of the session and the
-  session's state is logged in the EMail iso.  Once complete the EMail
-  object is returned to the client so that it can be introspected for
-  success or failure.
+  As the SMTP transaction is performed, a log of the session is created.
+  Once complete the EMail object is returned to the client with the
+  session-log.
   """
 
   var client_state: SMTPClientState = SMTPClientStateNoConnection
@@ -31,24 +30,25 @@ class SMTPClientNotify is TCPConnectionNotify
   var rcpttos: Array[String] = []
   var currentto: String val = ""
   var sessionlog: Reader iso = recover iso Reader end
+  var status: Bool = false
 
   new create(config': SMTPConfiguration val, email': EMail val) =>
     config = config'
     email = consume email'
 
-    for to in email.to'.keys() do
+    for to in email.to'.values() do
       rcpttos.push(to)
     end
-    for cc in email.cc'.keys() do
+    for cc in email.cc'.values() do
       rcpttos.push(cc)
     end
-    for bcc in email.bcc'.keys() do
+    for bcc in email.bcc'.values() do
       rcpttos.push(bcc)
     end
 
   fun ref connect_failed(conn: TCPConnection ref) =>
     var tsessionlog: Reader iso = sessionlog = recover iso Reader end
-    config.callback(email, consume tsessionlog)
+    config.callback(status, email, consume tsessionlog)
 
   fun ref connected(conn: TCPConnection ref) =>
 
@@ -85,7 +85,7 @@ class SMTPClientNotify is TCPConnectionNotify
     true
   fun ref closed(conn: TCPConnection ref) =>
     var tsessionlog: Reader iso = sessionlog = recover iso Reader end
-    config.callback(email, consume tsessionlog)
+    config.callback(status, email, consume tsessionlog)
 
   fun ref recv_pending_ok(conn: TCPConnection ref) =>
     try
@@ -93,6 +93,7 @@ class SMTPClientNotify is TCPConnectionNotify
       debug("← " + line)
       debug("→ None ←")
       client_state = None
+      status = true
       conn.write("QUIT\r\n")
     end
 
@@ -112,6 +113,10 @@ class SMTPClientNotify is TCPConnectionNotify
     try
       let response: String val = reader.line()?
       debug("← " + response + " <<<<" + currentto + ">>>>")
+      if (response.at_offset(0)? != '2') then
+        conn.hard_close()
+        client_state = None
+      end
       if (rcpttos.size() == 0) then
         client_state = SMTPClientStateReadyForMessage
         debug("→ SMTPClientStateReadyForMessage ←")
@@ -167,4 +172,10 @@ class SMTPClientNotify is TCPConnectionNotify
 
   fun ref debug(data: String val) =>
     sessionlog.append(data + "\n")
-//    Debug.out(data)
+ //   Debug.out(data)
+
+
+  fun die(err: String val = "", loc: SourceLoc val = __loc) =>
+    @printf("%s\n".cstring(), err.cstring())
+    @printf("FATAL: %s:%s\n".cstring(), loc.file().cstring(), loc.line().string().cstring())
+//    @exit(-1)

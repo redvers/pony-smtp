@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
+- Release 0.0.2 ([PR #4](https://github.com/redvers/pony-smtp/pull/4))
 
 ### Changed
 
